@@ -1,54 +1,45 @@
-import { useEffect } from "react";
-import "@/App.css";
+import React from "react";
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import FallingLights from "./components/FallingLights";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App min-h-screen bg-[#111113] relative">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
+        {/* Background Effects */}
+        <div className="moving-grid" />
+        <FallingLights />
+        <div className="noise-overlay" />
+        
+        {/* Main Content */}
+        <Navbar />
+        <main className="relative z-10">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/jobs" element={<ComingSoon title="Job Search" />} />
+            <Route path="/resume-builder" element={<ComingSoon title="Resume Builder" />} />
+            <Route path="/salary-predictor" element={<ComingSoon title="Salary Predictor" />} />
+            <Route path="/ats-calculator" element={<ComingSoon title="ATS Calculator" />} />
+          </Routes>
+        </main>
+        <Footer />
       </BrowserRouter>
     </div>
   );
 }
+
+// Temporary Coming Soon Component
+const ComingSoon = ({ title }) => (
+  <div className="min-h-screen flex items-center justify-center pt-20">
+    <div className="text-center">
+      <h1 className="text-4xl font-bold text-white mb-4">{title}</h1>
+      <p className="text-[#A1A1AA]">Full feature page coming soon...</p>
+    </div>
+  </div>
+);
 
 export default App;
