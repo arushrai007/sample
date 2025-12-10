@@ -1,0 +1,8 @@
+PyQt5==5.15.9
+PyQtWebEngine==5.15.7
+pyttsx3==2.90
+requests==2.31.0
+
+# Optional: For voice recognition (uncomment to enable)
+# SpeechRecognition==3.10.0
+# pyaudio==0.2.13
